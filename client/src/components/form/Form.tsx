@@ -1,5 +1,5 @@
+import { useState } from "react";
 import { CheckIcon, Cross1Icon } from "@radix-ui/react-icons";
-import React, { useState } from "react";
 import styled from "styled-components";
 
 import { Input } from "./Input";

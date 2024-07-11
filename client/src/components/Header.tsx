@@ -4,16 +4,21 @@ import styled from "styled-components";
 
 const StyledDiv = styled.header`
     display: flex;
+    justify-content: space-between;
 
     button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    
+        cursor: pointer;
+
         all: unset;
 
-        width: 25px;
-        height: 25px;
+        width: 35px;
+        height: 35px;
 
         background-color: ${(props) => props.theme.colors.grass9};
-        border: 1px solid;
-        border-color: ${(props) => props.theme.colors.olive9};
         border-radius: 50%;
 
         color: #fff;
@@ -25,13 +30,14 @@ type HeaderProps = {
     onItemAdd: (label: string) => void;
 };
 
-export const Header = (props: HeaderProps) => {
-    const { children } = props;
+export const Header = ({ children }: HeaderProps) => {
 
     return (
         <StyledDiv>
             <h1>{children}</h1>
-            <button>
+            <button
+                type="button"
+            >
                 <PlusIcon />
             </button>
         </StyledDiv>
