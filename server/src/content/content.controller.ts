@@ -42,10 +42,10 @@ export class ContentController {
   @Patch(':id')
   async update(
     @Param('id') id: string,
-    @Body() updateContentDto: UpdateContentDto
+    @Body() updateContentDto: UpdateContentDto,
   ) {
     return new ContentEntity(
-      await this.contentService.update(id, updateContentDto)
+      await this.contentService.update(id, updateContentDto),
     );
   }
 

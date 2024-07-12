@@ -44,13 +44,13 @@ export const contentGet = async (
 }
 
 export const contentPost = async (
-  {body, type, parentId, onSuccess}: {body: ContentData, onSuccess: () => void} & ContentIdentification,
+  {body, type, onSuccess}: {body: ContentData, onSuccess: () => void} & ContentIdentification,
   { rejectWithValue, signal }: GetThunkAPI<AsyncThunkConfig>
 ) => {
   try {
     const data = await checkResponse(
       await fetch(
-        contentUrl, postHeaders({body: {...body, type, parentId}, signal})
+        contentUrl, postHeaders({body: {...body, type}, signal})
       )
     ).json();
 

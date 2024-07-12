@@ -1,18 +1,26 @@
 import { useEffect } from "react";
 import styled from "styled-components";
 import { useShallowEqualSelector, selectContentList, apiGetContentList, useAppDispatch } from "../redux";
-import { ContentTypes } from "../config";
+import { ContentState, ContentTypes } from "../config";
 
 const StyledList = styled.div`
     display: flex;
     flex-direction: column;
 `;
 
+const StyledTodosWrapper = styled.div<{bgcolor: string}>`
+    background-color: ${({bgcolor, theme}) => theme.colors[bgcolor]};
+    margin-top: 8px;
+    margin-bottom: 8px;
+    padding: 8px;
+    border-radius: 4px
+`;
+
 export const List = () => {
 
     const dispatch = useAppDispatch();
     
-    const { data, isLoading, loaded } = useShallowEqualSelector((state) => selectContentList(state, ContentTypes.Task));
+    const { data, loaded } = useShallowEqualSelector((state) => selectContentList(state, ContentTypes.Task));
     
     useEffect(
         () => {
@@ -23,7 +31,22 @@ export const List = () => {
         [loaded, dispatch]
     );
 
-    console.log({data, isLoading})
+    const inProgress = data.filter(({state}) => state !== ContentState.Done);
 
-    return <StyledList />
+    const done = data.filter(({state}) => state === ContentState.Done);
+
+    return (
+        <StyledList>
+            {!!inProgress.length &&
+                <StyledTodosWrapper bgcolor="orange5">
+                    {inProgress.map(({id, title}) => <p key={id}>{title}</p>)}
+                </StyledTodosWrapper>
+            }
+            {!!done.length &&
+                <StyledTodosWrapper bgcolor="green5">
+                    {done.map(({id, title}) => <p key={id}>{title}</p>)}
+                </StyledTodosWrapper>
+            }
+        </StyledList>
+    )
 }

@@ -29,7 +29,7 @@ export const Form = (props: FormProps) => {
                 onCancel();
             }}
         >
-            <Input value={inputValue} onValueChange={(value) => setInputValue(value)} />
+            <Input value={inputValue} onValueChange={setInputValue} />
             <button type={"submit"}>
                 <CheckIcon />
             </button>

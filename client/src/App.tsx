@@ -12,7 +12,11 @@ export const App = () => (
         <ThemeProvider>
             <Container>
                 <Layout>
-                    <Header onItemAdd={() => console.warn("unimplemented")}>To Do app</Header>
+                    <Header
+                        onItemAdd={() => console.warn("unimplemented")}
+                    >
+                        To Do app
+                    </Header>
                     <List />
                     <Footer />
                 </Layout>
