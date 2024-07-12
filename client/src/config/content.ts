@@ -12,6 +12,7 @@ export enum ContentState {
 }
 
 export enum ContentItems {
+  Id = 'id',
   Title = 'title',
   Text = 'text',
   Type = 'type',
@@ -20,6 +21,7 @@ export enum ContentItems {
 }
 
 export interface ContentData {
+  [ContentItems.Id]: string;
   [ContentItems.Title]: string;
   [ContentItems.Text]?: string;
   [ContentItems.State]?: ContentState;

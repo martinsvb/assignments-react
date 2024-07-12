@@ -11,9 +11,6 @@ import { prismaExceptions } from './prisma';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  const apiPrefix = process.env.NODE_ENV === 'development' ? 'api' : '';
-
-  app.setGlobalPrefix(apiPrefix);
   const port = process.env.PORT || 3010;
 
   app.enableCors();
@@ -27,9 +24,7 @@ async function bootstrap() {
   );
 
   await app.listen(port);
-  Logger.log(
-    `🚀 Application is running on: http://localhost:${port}/${apiPrefix}`,
-  );
+  Logger.log(`🚀 Application is running on: http://localhost:${port}`);
 }
 
 bootstrap();
