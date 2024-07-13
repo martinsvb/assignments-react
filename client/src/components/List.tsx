@@ -14,6 +14,7 @@ const StyledTodosWrapper = styled.div<{bgcolor: string}>`
     margin-top: 8px;
     margin-bottom: 8px;
     padding: 8px;
+    padding-bottom: 0;
     border-radius: 4px;
 `;
 
@@ -35,7 +36,7 @@ export const List = () => {
     const inProgress = data.filter(({state}) => state !== ContentState.Done);
 
     const done = data.filter(({state}) => state === ContentState.Done);
-console.log({data})
+
     return (
         <StyledList>
             {!!inProgress.length &&
