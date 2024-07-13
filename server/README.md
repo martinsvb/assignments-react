@@ -2,6 +2,14 @@
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
 
+## Server Initialization
+
+<p align="left">npm install</p>
+<p align="left">install postgres SQL with user and password: postgres</p>
+<p align="left">npx prisma migrate dev --name "init"</p>
+<p align="left">npx prisma generate</p>
+<p align="left">npm run start:dev</p>
+
 [circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
 [circleci-url]: https://circleci.com/gh/nestjs/nest
 
