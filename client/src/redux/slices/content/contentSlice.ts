@@ -1,27 +1,15 @@
-import { PayloadAction } from '@reduxjs/toolkit';
 import { ContentData, ContentTypes, ApiOperations } from '../../../config';
 import {
   contentDelete,
-  contentGet,
   contentListGet,
   contentPatch,
   contentPost
 } from "./contentApi";
 import { createSlice } from "../createSlice";
 
-interface ContentItemData {
-  data: ContentData | null;
-  loaded: boolean;
-}
-
 interface ContentListData {
   data: ContentData[];
   loaded: boolean;
-}
-
-export const initContentData = {
-  data: null,
-  loaded: false
 }
 
 const initContentListData = {
@@ -30,11 +18,6 @@ const initContentListData = {
 }
 
 export interface ContentState {
-  content: {
-    [ContentTypes.Article]: ContentItemData;
-    [ContentTypes.Task]: ContentItemData;
-    [ContentTypes.New]: ContentItemData;
-  };
   contentList: {
     [ContentTypes.Article]: ContentListData;
     [ContentTypes.Task]: ContentListData;
@@ -53,11 +36,6 @@ export interface ContentState {
 }
 
 export const initialContentState: ContentState = {
-  content: {
-    [ContentTypes.Article]: initContentData,
-    [ContentTypes.Task]: initContentData,
-    [ContentTypes.New]: initContentData,
-  },
   contentList: {
     [ContentTypes.Article]: initContentListData,
     [ContentTypes.Task]: initContentListData,
@@ -80,18 +58,6 @@ const contentSlice = createSlice({
   initialState: initialContentState,
   reducers: (create) => ({
     resetContent: create.reducer(() => initialContentState),
-    resetContentItem: create.reducer((
-      state,
-      {payload: {type}}: PayloadAction<{type: ContentTypes}>
-    ) => {
-      state.content[type] = initContentData;
-    }),
-    setContent: create.reducer((
-      state,
-      {payload: {data, type}}: PayloadAction<{data: ContentData | null, type: ContentTypes}>
-    ) => {
-      state.content[type].data = data;
-    }),
     apiGetContentList: create.asyncThunk(
       contentListGet,
       {
@@ -107,24 +73,6 @@ const contentSlice = createSlice({
         },
         settled: (state, { meta: { arg: { type } } }) => {
           state.loading[type][ApiOperations.getList] = false;
-        },
-      },
-    ),
-    apiGetContent: create.asyncThunk(
-      contentGet,
-      {
-        pending: (state, { meta: { arg: { type } } }) => {
-          state.loading[type][ApiOperations.getItem] = true;
-        },
-        rejected: (state, { error, payload, meta: { arg: { type } } }) => {
-          state.error[type][ApiOperations.getItem] = payload ?? error;
-        },
-        fulfilled: (state, { payload, meta: { arg: { type } } }) => {
-          state.content[type].data = payload;
-          state.content[type].loaded = true;
-        },
-        settled: (state, { meta: { arg: { type } } }) => {
-          state.loading[type][ApiOperations.getItem] = false;
         },
       },
     ),
@@ -188,13 +136,6 @@ const contentSlice = createSlice({
     ),
   }),
   selectors: {
-    selectContent: (state, type: ContentTypes) => {
-      return {
-        data: state.content[type].data,
-        loaded: state.contentList[type].loaded,
-        isLoading: !!state.loading[type][ApiOperations.getItem]
-      }
-    },
     selectContentList: (state, type: ContentTypes) => {
       return {
         data: state.contentList[type].data,
@@ -212,17 +153,13 @@ export default contentSlice.reducer;
 
 export const {
   apiGetContentList,
-  apiGetContent,
   apiPostContent,
   apiPatchContent,
   apiDeleteContent,
-  resetContent,
-  resetContentItem,
-  setContent
+  resetContent
 } = contentSlice.actions;
 
 export const {
-  selectContent,
   selectContentList,
   selectIsContentsLoading
 } = contentSlice.selectors;

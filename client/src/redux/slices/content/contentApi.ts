@@ -30,19 +30,6 @@ export const contentListGet = async (
   }
 }
 
-export const contentGet = async (
-  {id, type}: {id: string} & ContentIdentification,
-  { rejectWithValue, signal }: GetThunkAPI<AsyncThunkConfig>
-) => {
-  try {
-    return await checkResponse(
-      await fetch(`${contentUrl}/${id}/${type}`, getHeaders({signal}))
-    ).json();
-  } catch (error: unknown) {
-    return rejectWithValue(getErrorValue(error));
-  }
-}
-
 export const contentPost = async (
   {body, type, onSuccess}: {body: ContentData, onSuccess: () => void} & ContentIdentification,
   { rejectWithValue, signal }: GetThunkAPI<AsyncThunkConfig>

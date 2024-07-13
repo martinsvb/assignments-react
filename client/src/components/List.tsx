@@ -40,26 +40,20 @@ export const List = () => {
         <StyledList>
             {!!inProgress.length &&
                 <StyledTodosWrapper bgcolor="orange5">
-                    {inProgress.map(({id, title}) => (
+                    {inProgress.map((todo) => (
                         <ListItem
-                            key={id}
-                            id={id}
-                            label={title}
-                            isDone={false}
-                            onItemDelete={() => null}
+                            key={todo.id}
+                            {...todo}
                         />
                     ))}
                 </StyledTodosWrapper>
             }
             {!!done.length &&
                 <StyledTodosWrapper bgcolor="green5">
-                    {done.map(({id, title}) => (
+                    {done.map((todo) => (
                         <ListItem
-                            key={id}
-                            id={id}
-                            label={title}
-                            isDone
-                            onItemDelete={() => null}
+                            key={todo.id}
+                            {...todo}
                         />
                     ))}
                 </StyledTodosWrapper>
