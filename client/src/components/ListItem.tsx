@@ -11,6 +11,7 @@ const StyledDiv = styled.div`
     display: flex;
     align-items: center;
     margin-bottom: 8px;
+    height: 28px;
 `;
 
 const Label = styled.label`
@@ -25,6 +26,8 @@ const Buttons = styled.div`
 export const ListItem = ({ title, id, state }: ContentData) => {
 
     const [showForm, setShowForm] = useState(false);
+
+    const [ hovered, setHovered ] = useState(false);
 
     const dispatch = useAppDispatch();
 
@@ -93,7 +96,14 @@ export const ListItem = ({ title, id, state }: ContentData) => {
     );
 
     return (
-        <StyledDiv>
+        <StyledDiv
+            onMouseEnter={() => {
+                setHovered(true);
+            }}
+            onMouseLeave={() => {
+                setHovered(false);
+            }}
+        >
             {showForm ?
                 <Form
                     initialValue={title}
@@ -104,14 +114,16 @@ export const ListItem = ({ title, id, state }: ContentData) => {
                 <>
                     <Checkbox checked={state === ContentState.Done} onCheckedChange={handleToggleTodo} />
                     <Label>{title}</Label>
-                    <Buttons>
-                        <Button onClick={handleEdit} mr={0.5}>
-                            <Pencil1Icon />
-                        </Button>
-                        <Button onClick={handleDelete}>
-                            <TrashIcon />
-                        </Button>
-                    </Buttons>
+                    {hovered &&
+                        <Buttons>
+                            <Button onClick={handleEdit} mr={0.5}>
+                                <Pencil1Icon />
+                            </Button>
+                            <Button onClick={handleDelete}>
+                                <TrashIcon />
+                            </Button>
+                        </Buttons>
+                    }
                 </>
             }
         </StyledDiv>
