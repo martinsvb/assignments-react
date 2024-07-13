@@ -16,6 +16,9 @@ export class ContentService {
       where: {
         type,
       },
+      orderBy: {
+        createdAt: 'desc',
+      },
     });
   }
 
