@@ -65,16 +65,18 @@ export const contentPost = async (
 export const contentPatch = async (
   {
     body,
-    type,
     id,
+    onSuccess,
     parentId,
-  }: {body: Partial<ContentData>, id: string, successMsg?: string} & ContentIdentification,
+  }: {body: Partial<ContentData>, id: string, successMsg?: string, onSuccess: () => void} & ContentIdentification,
   { rejectWithValue, signal }: GetThunkAPI<AsyncThunkConfig>
 ) => {
   try {
     const data = await checkResponse(
-      await fetch(`${contentUrl}/${id}/${type}`, patchHeaders({body: {...body, parentId}, signal}))
+      await fetch(`${contentUrl}/${id}`, patchHeaders({body: {...body, parentId}, signal}))
     ).json();
+
+    onSuccess();
 
     return data;
   } catch (error: unknown) {
