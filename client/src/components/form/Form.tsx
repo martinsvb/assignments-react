@@ -3,6 +3,7 @@ import { CheckIcon, Cross1Icon } from "@radix-ui/react-icons";
 import styled from "styled-components";
 
 import { Input } from "./Input";
+import { Button } from "../Button";
 
 const FormStyled = styled.form`
     display: flex;
@@ -30,12 +31,22 @@ export const Form = (props: FormProps) => {
             }}
         >
             <Input value={inputValue} onValueChange={setInputValue} />
-            <button type={"submit"}>
+            <Button
+                type={"submit"}
+                bgcolor="grass9"
+                color="#fff"
+                ml={1}
+                mr={0.5}
+            >
                 <CheckIcon />
-            </button>
-            <button type={"reset"}>
+            </Button>
+            <Button
+                type={"reset"}
+                bgcolor="olive9"
+                color="#fff"
+            >
                 <Cross1Icon />
-            </button>
+            </Button>
         </FormStyled>
     );
 };

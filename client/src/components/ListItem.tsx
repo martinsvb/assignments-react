@@ -5,6 +5,7 @@ import { Checkbox } from "./Checkbox";
 import { ContentData, ContentState, ContentTypes } from "../config";
 import { apiDeleteContent, apiPatchContent, useAppDispatch } from "../redux";
 import { Form } from "./form";
+import { Button } from "./Button";
 
 const StyledDiv = styled.div`
     display: flex;
@@ -17,6 +18,7 @@ const Label = styled.label`
 `;
 
 const Buttons = styled.div`
+    display: flex;
     margin-left: auto;
 `;
 
@@ -103,12 +105,12 @@ export const ListItem = ({ title, id, state }: ContentData) => {
                     <Checkbox checked={state === ContentState.Done} onCheckedChange={handleToggleTodo} />
                     <Label>{title}</Label>
                     <Buttons>
-                        <button onClick={handleEdit}>
+                        <Button onClick={handleEdit} mr={0.5}>
                             <Pencil1Icon />
-                        </button>
-                        <button onClick={handleDelete}>
+                        </Button>
+                        <Button onClick={handleDelete}>
                             <TrashIcon />
-                        </button>
+                        </Button>
                     </Buttons>
                 </>
             }

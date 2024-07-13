@@ -4,29 +4,12 @@ import styled from "styled-components";
 import { Form } from "./form";
 import { apiPostContent, useAppDispatch } from "../redux";
 import { ContentState, ContentTypes } from "../config";
+import { Button } from "./Button";
 
 const StyledDiv = styled.header`
     display: flex;
     justify-content: space-between;
     align-items: center;
-
-    button {
-        display: flex;
-
-        justify-content: center;
-        align-items: center;
-    
-        cursor: pointer;
-
-        width: 35px;
-        height: 35px;
-
-        background-color: ${(props) => props.theme.colors.grass9};
-        border: 0;
-        border-radius: 50%;
-
-        color: #fff;
-    }
 `;
 
 type HeaderProps = {
@@ -83,12 +66,15 @@ export const Header = ({ children }: HeaderProps) => {
                     onCancel={handleCancel}
                 />
                 :
-                <button
+                <Button
                     type="button"
                     onClick={handleAdd}
+                    size="35px"
+                    bgcolor="grass9"
+                    color="#fff"
                 >
                     <PlusIcon />
-                </button>
+                </Button>
             }
         </StyledDiv>
     );
