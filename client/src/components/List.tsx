@@ -35,7 +35,7 @@ export const List = () => {
     const inProgress = data.filter(({state}) => state !== ContentState.Done);
 
     const done = data.filter(({state}) => state === ContentState.Done);
-
+console.log({data})
     return (
         <StyledList>
             {!!inProgress.length &&
