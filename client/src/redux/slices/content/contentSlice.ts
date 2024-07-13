@@ -1,4 +1,4 @@
-import { ContentData, ContentTypes, ApiOperations } from '../../../config';
+import { ContentData, ContentTypes, ApiOperations, ContentState } from '../../../config';
 import {
   contentDelete,
   contentListGet,
@@ -17,7 +17,7 @@ const initContentListData = {
   loaded: false
 }
 
-export interface ContentState {
+export interface ContentSliceState {
   contentList: {
     [ContentTypes.Article]: ContentListData;
     [ContentTypes.Task]: ContentListData;
@@ -35,7 +35,7 @@ export interface ContentState {
   };
 }
 
-export const initialContentState: ContentState = {
+export const initialContentState: ContentSliceState = {
   contentList: {
     [ContentTypes.Article]: initContentListData,
     [ContentTypes.Task]: initContentListData,
@@ -143,6 +143,19 @@ const contentSlice = createSlice({
         isLoading: !!state.loading[type][ApiOperations.getList]
       }
     },
+    selectTasksCount: (state) => {
+      const { data } = state.contentList[ContentTypes.Task];
+      if (!data.length) {
+        return {
+          inProgress: 0,
+          done: 0
+        }
+      }
+      return {
+        inProgress: data.filter((todo) => todo.state !== ContentState.Done).length,
+        done: data.filter((todo) => todo.state === ContentState.Done).length
+      }
+    },
     selectIsContentsLoading: (state, type: ContentTypes, operation: ApiOperations) => {
       return !!state.loading[type][operation];
     },
@@ -161,5 +174,6 @@ export const {
 
 export const {
   selectContentList,
-  selectIsContentsLoading
+  selectIsContentsLoading,
+  selectTasksCount
 } = contentSlice.selectors;

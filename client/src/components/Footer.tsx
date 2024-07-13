@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { selectTasksCount, useShallowEqualSelector } from "../redux";
 
 const FooterStyled = styled.footer`
     display: flex;
@@ -12,18 +13,15 @@ const FooterStyled = styled.footer`
     margin-top: auto;
 `;
 
-type FooterProps = {
-    todoItems?: number;
-    doneItems?: number;
-};
+export const Footer = () => {
 
-export const Footer = ({ todoItems = 0, doneItems = 0 }: FooterProps) => {
+    const { inProgress, done } = useShallowEqualSelector(selectTasksCount);
 
     return (
         <FooterStyled>
-            Todo: {todoItems}
+            Todo: {inProgress}
             {`, `}
-            Done: {doneItems}
+            Done: {done}
         </FooterStyled>
     );
 };
