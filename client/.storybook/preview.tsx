@@ -1,11 +1,15 @@
-import type { Parameters, Preview, Decorator } from "@storybook/react";
+import type { Parameters, Decorator } from "@storybook/react";
+import { Provider } from 'react-redux';
 import { ThemeProvider } from "../src/components/providers/ThemeProvider";
+import { store } from '../src/redux';
 
 export const decorators: Decorator[] = [
     (Story) => (
-        <ThemeProvider>
-            <Story />
-        </ThemeProvider>
+        <Provider store={store}>
+            <ThemeProvider>
+                <Story />
+            </ThemeProvider>
+        </Provider>
     ),
 ];
 
