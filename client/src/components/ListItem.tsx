@@ -2,7 +2,7 @@ import { useState, useCallback } from "react";
 import { Pencil1Icon, TrashIcon } from "@radix-ui/react-icons";
 import styled from "styled-components";
 import { Checkbox } from "./Checkbox";
-import { ContentTypes } from "../config";
+import { ContentState, ContentTypes } from "../config";
 import { apiPatchContent, useAppDispatch } from "../redux";
 import { Form } from "./form";
 
@@ -20,15 +20,14 @@ const Buttons = styled.div`
     margin-left: auto;
 `;
 
-export type LiteeItemProp = {
+export type ListItemProps = {
     id?: string;
     label: string;
     isDone: boolean;
-    onItemDoneToggle: (isDone: boolean) => void;
     onItemDelete: () => void;
 };
 
-export const ListItem = ({ label, id, isDone, onItemDoneToggle, onItemDelete }: LiteeItemProp) => {
+export const ListItem = ({ label, id, isDone, onItemDelete }: ListItemProps) => {
 
     const [showForm, setShowForm] = useState(false);
 
@@ -66,6 +65,21 @@ export const ListItem = ({ label, id, isDone, onItemDoneToggle, onItemDelete }: 
         [dispatch, id]
     );
 
+    const handleToggleTodo = useCallback(
+        (checked: boolean) => {
+            if (id) {
+                dispatch(
+                    apiPatchContent({
+                        body: {state: checked ? ContentState.Done : ContentState.InProgress},
+                        id,
+                        type: ContentTypes.Task
+                    })
+                );
+            }
+        },
+        [dispatch, id]
+    );
+
     return (
         <StyledDiv>
             {showForm ?
@@ -76,7 +90,7 @@ export const ListItem = ({ label, id, isDone, onItemDoneToggle, onItemDelete }: 
                 />
                 :
                 <>
-                    <Checkbox checked={isDone} onCheckedChange={() => onItemDoneToggle(isDone)} />
+                    <Checkbox checked={isDone} onCheckedChange={handleToggleTodo} />
                     <Label>{label}</Label>
                     <Buttons>
                         <button onClick={handleEdit}>

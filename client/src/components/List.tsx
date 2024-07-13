@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import { useEffect } from "react";
 import styled from "styled-components";
 import { useShallowEqualSelector, selectContentList, apiGetContentList, useAppDispatch } from "../redux";
 import { ContentState, ContentTypes } from "../config";
@@ -46,8 +46,6 @@ export const List = () => {
                             id={id}
                             label={title}
                             isDone={false}
-                            onItemLabelEdit={() => null}
-                            onItemDoneToggle={() => null}
                             onItemDelete={() => null}
                         />
                     ))}
@@ -58,10 +56,9 @@ export const List = () => {
                     {done.map(({id, title}) => (
                         <ListItem
                             key={id}
+                            id={id}
                             label={title}
-                            isDone={false}
-                            onItemLabelEdit={() => null}
-                            onItemDoneToggle={() => null}
+                            isDone
                             onItemDelete={() => null}
                         />
                     ))}
