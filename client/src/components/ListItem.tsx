@@ -3,7 +3,7 @@ import { Pencil1Icon, TrashIcon } from "@radix-ui/react-icons";
 import styled from "styled-components";
 import { Checkbox } from "./Checkbox";
 import { ContentState, ContentTypes } from "../config";
-import { apiPatchContent, useAppDispatch } from "../redux";
+import { apiDeleteContent, apiPatchContent, useAppDispatch } from "../redux";
 import { Form } from "./form";
 
 const StyledDiv = styled.div`
@@ -24,10 +24,9 @@ export type ListItemProps = {
     id?: string;
     label: string;
     isDone: boolean;
-    onItemDelete: () => void;
 };
 
-export const ListItem = ({ label, id, isDone, onItemDelete }: ListItemProps) => {
+export const ListItem = ({ label, id, isDone }: ListItemProps) => {
 
     const [showForm, setShowForm] = useState(false);
 
@@ -80,6 +79,23 @@ export const ListItem = ({ label, id, isDone, onItemDelete }: ListItemProps) => 
         [dispatch, id]
     );
 
+    const handleDelete = useCallback(
+        () => {
+            if (id) {
+                dispatch(
+                    apiDeleteContent({
+                        id,
+                        type: ContentTypes.Task,
+                        onSuccess: () => {
+                            alert(`Todo: ${label} was deleted.`);
+                        }
+                    })
+                );
+            }
+        },
+        [dispatch, id]
+    );
+
     return (
         <StyledDiv>
             {showForm ?
@@ -96,7 +112,7 @@ export const ListItem = ({ label, id, isDone, onItemDelete }: ListItemProps) => 
                         <button onClick={handleEdit}>
                             <Pencil1Icon />
                         </button>
-                        <button onClick={() => onItemDelete()}>
+                        <button onClick={handleDelete}>
                             <TrashIcon />
                         </button>
                     </Buttons>

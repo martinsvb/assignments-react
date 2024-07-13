@@ -85,12 +85,12 @@ export const contentPatch = async (
 }
 
 export const contentDelete = async (
-  {id, type, onSuccess}: {id: string, onSuccess: () => void} & ContentIdentification,
+  {id, onSuccess}: {id: string, onSuccess: () => void} & ContentIdentification,
   { rejectWithValue, signal }: GetThunkAPI<AsyncThunkConfig>
 ) => {
   try {
     const data = await checkResponse(
-      await fetch(`${contentUrl}/${id}/${type}`, delHeaders({signal}))
+      await fetch(`${contentUrl}/${id}`, delHeaders({signal}))
     ).json();
 
     onSuccess();
